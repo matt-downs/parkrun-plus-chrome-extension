@@ -1,10 +1,10 @@
 var following = ['2054291'];
 
 chrome.browserAction.onClicked.addListener(function(tab) {
-    chrome.tabs.create({'url': chrome.extension.getURL('popup.html'), 'active': false});
+    chrome.tabs.create({ 'url': chrome.extension.getURL('app/app.html'), 'active': true });
 });
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.type) {
         case 'followQuery':
             sendResponse(processFollowQuery(sender.tab.url));
@@ -18,10 +18,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         default:
             console.log('Unknown message');
     }
-
-    // if (sender.tab) {
-    //     console.log("from a content script:" + sender.tab.url);
-    // }
 });
 
 
