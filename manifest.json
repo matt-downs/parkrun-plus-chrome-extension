@@ -1,0 +1,29 @@
+{
+    "manifest_version": 2,
+
+    "name": "Parkrun",
+    "description": "description",
+    "version": "1.0",
+
+    "browser_action": {
+        "default_icon": "icon.png"
+    },
+
+    "background": {
+        "scripts": ["eventpage.js"],
+        "persistent": false
+    },
+
+    "content_scripts": [{
+        "matches": ["*://*/*"],
+        "include_globs": ["*.parkrun.com*"],
+        "run_at": "document_end",
+        "css": ["mystyles.css"],
+        "js": ["contentscript.js"]
+    }],
+
+    "permissions": [
+        "activeTab",
+        "http://*/"
+    ]
+}
