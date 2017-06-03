@@ -16,7 +16,7 @@
     },
 
     "background": {
-        "scripts": ["eventpage.js"],
+        "scripts": ["eventPage.js"],
         "persistent": false
     },
 
@@ -24,8 +24,8 @@
         "matches": ["*://*/*"],
         "include_globs": ["*.parkrun.com.au*"],
         "run_at": "document_end",
-        "css": ["mystyles.css"],
-        "js": ["contentscript.js"]
+        "css": ["contentScripts/athleteProfile.css"],
+        "js": ["contentScripts/athleteProfile.js"]
     }],
 
     "permissions": [
