@@ -1,0 +1,22 @@
+{
+  "name": "parkrun-plus-chrome-extension",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://matt-downs@github.com/matt-downs/parkrun-plus-chrome-extension.git"
+  },
+  "author": "Matt Downs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matt-downs/parkrun-plus-chrome-extension/issues"
+  },
+  "homepage": "https://github.com/matt-downs/parkrun-plus-chrome-extension#readme",
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "moment": "^2.18.1",
+    "vue": "^2.3.3",
+    "vue-material": "^0.7.1"
+  }
+}
