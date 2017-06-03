@@ -1,28 +1,36 @@
 Vue.component('results-card', {
     props: ['day'],
     template: `
-        <div class="card mb-5 mt-5">
-            <h5 class="card-header">
-                {{timeAgo}}
-                <small class="text-muted">{{date}}</small>
-            </h5>
+    <md-layout md-row md-align="center">
+    <md-layout md-column class="card-column">
+        <md-card class="day-card">
+            <md-card-header>
+                <div class="md-title">{{timeAgo}}</div>
+                <div class="md-subhead">{{date}}</div>
+            </md-card-header>
 
-            <table class="table table-hover mb-0">
-               
-                <thead>
-                    <tr>
-                        <th>Place</th>
-                        <th>Name</th>
-                        <th>Time</th>
-                        <th class="hidden-xs-down">Location</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Render each row in the table using the template "result-row" -->
-                    <tr is="result-row" v-for="result in day.results" :result="result"></tr>
-                </tbody>
-            </table>
-        </div>
+            <md-card-content>
+                <md-table v-once>
+                    <md-table-header>
+                        <md-table-row>
+                            <md-table-head>Place</md-table-head>
+                            <md-table-head>Name</md-table-head>
+                            <md-table-head>Time</md-table-head>
+                            <md-table-head>Location</md-table-head>
+                        </md-table-row>
+                    </md-table-header>
+
+                    <md-table-body>
+                        <!-- Render each row in the table using the template "result-row" -->
+                        <result-row v-for="result in day.results" :result="result"></result-row>
+                    </md-table-body>
+                </md-table>
+
+
+            </md-card-content>
+        </md-card>
+        </md-layout>
+        </md-layout>
   `,
     computed: {
         timeAgo: function() {
@@ -39,13 +47,20 @@ Vue.component('results-card', {
 Vue.component('result-row', {
     props: ['result'],
     template: `
-        <tr>
-            <td>1</td>
-            <td>
-                <a href="#">{{result.name}}</a>
-            </td>
-            <td>{{result.time}}</td>
-            <td class="hidden-xs-down">{{result.event}}</td>
-        </tr>
-  `
+        <md-table-row>
+            <md-table-cell>1</md-table-cell>
+            <md-table-cell>
+                <a href="#" v-on:click="openAthleteLink(result.athleteId)">{{result.name}}</a>
+            </md-table-cell>
+            <md-table-cell>{{result.time}}</md-table-cell>
+            <md-table-cell>{{result.event}}</md-table-cell>
+        </md-table-row>
+  `,
+    methods: {
+        openAthleteLink(athleteId) {
+            var url = 'http://www.parkrun.com.au/results/athleteresultshistory/?athleteNumber=' + athleteId
+            window.open(url);
+            // http://www.parkrun.com.au/results/athleteresultshistory/?athleteNumber=
+        }
+    }
 });

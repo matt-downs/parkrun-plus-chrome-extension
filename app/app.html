@@ -2,38 +2,40 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
-        integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <title>Parkrun Plus</title>
+    <link rel="stylesheet" href="../libs/vue-material/vue-material.css">
+    <style>
+      .card-column {
+        margin: 20px;
+        max-width: 900px;
+      }
+      #loading-spinner {
+        margin-top: 50px;
+      }
+    </style>
 </head>
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-light bg-faded">
-            <div class="container">
-                <a class="navbar-brand">Parkrun Plus</a>
-            </div>
-        </nav>
+        <md-toolbar>
+            <h1 class="md-title">Parkrun Plus</h1>
+        </md-toolbar>
 
-        <div class="progress" v-if="!doneLoading">
-            <div class="progress-bar" role="progressbar" style="height: 2px;" v-bind:style="{ width: loadProgress + '%' }"></div>
-        </div>
+        <md-layout md-align="center" v-if="!doneLoading">
+            <md-spinner id="loading-spinner" v-bind:md-indeterminate="loadProgress == 0" :md-progress="loadProgress" :md-size="150"></md-spinner>
+        </md-layout>
 
-        <div class="container">
-
+        <div class="main-content">
             <!-- Display a card for each day -->
             <results-card v-for="day in days" :day="day" :key="day.date"></results-card>
-
         </div>
     </div>
 
     <script src="../libs/jquery-3.2.1.min.js"></script>
     <script src="../libs/moment.js"></script>
     <script src="../libs/vue.js"></script>
+    <script src="../libs/vue-material/vue-material.js"></script>
     <script src="api.js"></script>
     <script src="components.js"></script>
     <script src="app.js"></script>

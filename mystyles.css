@@ -1,0 +1,17 @@
+#follow-button {
+  border-radius: 5px;
+  border: none;
+  font-size: 13px;
+  /* Match the MD colour scheme from the main app */
+  color: rgba(0, 0, 0, .87);
+  background: #d4e157;
+  padding: 10px 20px 10px 20px;
+  margin: 20px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#follow-button:hover {
+  background: #c0ca33;
+  text-decoration: none;
+}

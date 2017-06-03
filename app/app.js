@@ -1,35 +1,43 @@
-var sampleFollowing = [
-    '2054291', // Me
-    '1830855', // Frances
-    '1910204', // Andrew
-    '655632' // Emilie
-];
-
-
 var queue = [];
 var doneCount = 0;
 
 
-// Updates the total load progress of the queue, called after each queue item has been loaded
-function updateProgress(count) {
-    data.loadProgress = (count + 1) / queue.length * 100;
-}
-
-
-// Add each athlete to the download queue
-$.each(sampleFollowing, function(i, el) {
-    queue.push(getAthleteResults(el).then(function(val) {
-        updateProgress(doneCount++);
-        return val;
-    }));
+chrome.storage.sync.get('following', function(res) {
+    // If value returned from storage is undefined or isn't an array, return an empty array
+    if (!res.following || res.following.constructor !== Array) res.following = [];
+    loadResults(res.following);
 });
 
 
-// Load all data in the queue
-Promise.all(queue)
-    .then(function(results) {
-        sortResults(results);
+// Loads parkrun website results from athleteNumbers in athletes array
+function loadResults(athletes) {
+    queue = [];
+    doneCount = 0;
+
+    // Add each athlete to the download queue
+    $.each(athletes, function(i, el) {
+        queue.push(getAthleteResults(el)
+            .then(function(val) {
+                updateQueueProgress(doneCount++);
+                return val;
+            }));
     });
+
+
+    // Load all data in the queue
+    Promise.all(queue)
+        .then(function(results) {
+            sortResults(results);
+        });
+}
+
+// loadResults(sampleFollowing);
+
+
+// Updates the total load progress of the queue, called after each queue item has been loaded
+function updateQueueProgress(count) {
+    data.loadProgress = (count + 1) / queue.length * 100;
+}
 
 
 // Sort the data once all the items in the queue have finished loading
@@ -39,6 +47,7 @@ function sortResults(athletes) {
     $.each(athletes, function(i, athlete) {
         $.each(athlete.results, function(i, result) {
             result.name = athlete.name;
+            result.athleteId = athlete.athleteId;
             var date = result.date;
             delete result.date;
             if (!dateIndex[date]) dateIndex[date] = [result];
@@ -58,6 +67,12 @@ function sortResults(athletes) {
     days.sort(function(a, b) {
         return b.date - a.date;
     });
+
+    // Show only the latest 10 days
+    if (days.length > 10) {
+        days.splice(10, days.length - 10);
+    }
+
 
     // Sort the results for each day in decending order
     $.each(days, function(i, day) {
@@ -85,9 +100,25 @@ var data = {
     doneLoading: false
 };
 
+Vue.use(VueMaterial);
+
+Vue.material.registerTheme({
+  default: {
+    primary: {
+      color: 'lime',
+      hue: 400
+    },
+    accent: 'blue'
+  }
+});
 
 // Initialise the app
 var app = new Vue({
     el: '#app',
-    data: data
+    data: data,
+    methods: {
+        toggleLeftSidenav() {
+            this.$refs.leftSidenav.toggle();
+        }
+    }
 })

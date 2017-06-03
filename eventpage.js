@@ -1,69 +1,95 @@
-var following = ['2054291'];
-
+// Open the app page when the browser icon is clicked
 chrome.browserAction.onClicked.addListener(function(tab) {
     chrome.tabs.create({ 'url': chrome.extension.getURL('app/app.html'), 'active': true });
 });
 
+
+// Listen for messages from the content script
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.type) {
         case 'followQuery':
-            sendResponse(processFollowQuery(sender.tab.url));
-            break;
+            processFollowQuery(sender.tab.url, function(res) {
+                sendResponse(res);
+            });
+            return true; // Indicate that the sendResponse is async
         case 'follow':
-            sendResponse(processFollow(sender.tab.url));
-            break;
+            processFollow(sender.tab.url, function(res) {
+                sendResponse(res);
+            });
+            return true;
         case 'unfollow':
-            sendResponse(processUnfollow(sender.tab.url));
-            break;
+            processUnfollow(sender.tab.url, function(res) {
+                sendResponse(res);
+            });
+            return true;
         default:
             console.log('Unknown message');
     }
 });
 
 
-function processFollowQuery(url) {
+// Queries whether a athlete is followed using their athlete page URL
+function processFollowQuery(url, callback) {
     var athleteId = getParameterByName(url, 'athleteNumber');
 
-    var isFollowing = false;
-    for (var i = 0; i < following.length; i++) {
-        if (following[i] == athleteId) {
-            isFollowing = true;
-            break;
+    getFollowingFromStorage(function(following) {
+        var isFollowing = false;
+        for (var i = 0; i < following.length; i++) {
+            if (following[i] == athleteId) {
+                isFollowing = true;
+                break;
+            }
         }
-    }
 
-    return {
-        following: isFollowing
-    };
+        callback({ following: isFollowing });
+    });
 }
 
 
-function processFollow(url) {
-    var athleteId = getParameterByName(url, 'athleteNumber');
-    // TODO check for duplicates
-    following.push(athleteId);
-    return {
-        following: true
-    };
-}
-
-
-function processUnfollow(url) {
+// Follow an athlete using their athlete page URL
+function processFollow(url, callback) {
     var athleteId = getParameterByName(url, 'athleteNumber');
 
-    for (var i = 0; i < following.length; i++) {
-        if (following[i] == athleteId) {
-            following.splice(i, 1);
-            break;
+    getFollowingFromStorage(function(following) {
+        // Check if already following
+        var alreadyFollowing = false;
+        for (var i = 0; i < following.length; i++) {
+            if (following[i] == athleteId) {
+                alreadyFollowing = true;
+                break;
+            }
         }
-    }
 
-    return {
-        following: false
-    };
+        if (!alreadyFollowing) {
+            following.push(athleteId);
+            saveFollowingToStorage(following);
+        }
+
+        callback({ following: true });
+    });
 }
 
 
+// Unfollow an athlete using their athlete page URL
+function processUnfollow(url, callback) {
+    var athleteId = getParameterByName(url, 'athleteNumber');
+
+    getFollowingFromStorage(function(following) {
+        for (var i = 0; i < following.length; i++) {
+            if (following[i] == athleteId) {
+                following.splice(i, 1);
+                break;
+            }
+        }
+
+        saveFollowingToStorage(following);
+        callback({ following: false });
+    });
+}
+
+
+// Grabs the specified query string from a url.
+// Used for extracting the athleteNumber from their page URL.
 // Adapted from http://stackoverflow.com/a/901144
 function getParameterByName(url, name) {
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -72,4 +98,23 @@ function getParameterByName(url, name) {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+
+// Get following array from Chrome storage
+function getFollowingFromStorage(callback) {
+    chrome.storage.sync.get('following', function(res) {
+        // If value returned from storage is undefined or isn't an array, return an empty array
+        if (!res.following || res.following.constructor !== Array) res.following = [];
+        callback(res.following);
+    });
+}
+
+
+// Save following array to chrome storage
+function saveFollowingToStorage(following) {
+    // Only save the data if it is a valid array
+    if (following.constructor !== Array) return console.log('Error saving data');
+    console.log(following);
+    chrome.storage.sync.set({ 'following': following });
 }

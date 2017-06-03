@@ -30,6 +30,7 @@ function getAthleteResults(athleteId) {
 
                     var athleteData = {
                         name: name,
+                        athleteId: athleteId,
                         results: parsedResults
                     };
                     resolve(athleteData);
