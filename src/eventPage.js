@@ -105,8 +105,10 @@ function getParameterByName(url, name) {
 function getFollowingFromStorage(callback) {
     chrome.storage.sync.get('following', function(res) {
         // If value returned from storage is undefined or isn't an array, return an empty array
-        if (!res.following || res.following.constructor !== Array) res.following = [];
-        callback(res.following);
+        if (!res.following || !res.following.au) res.following = {
+            au: []
+        }
+        callback(res.following.au);
     });
 }
 
@@ -114,7 +116,7 @@ function getFollowingFromStorage(callback) {
 // Save following array to chrome storage
 function saveFollowingToStorage(following) {
     // Only save the data if it is a valid array
-    if (following.constructor !== Array) return console.log('Error saving data');
     console.log(following);
-    chrome.storage.sync.set({ 'following': following });
+    if (!following || !following.length) return console.log('Error saving data');
+    chrome.storage.sync.set({ 'following': { au: following } });
 }

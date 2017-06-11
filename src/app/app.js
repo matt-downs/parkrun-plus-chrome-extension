@@ -4,8 +4,8 @@ var doneCount = 0;
 
 chrome.storage.sync.get('following', function(res) {
     // If value returned from storage is undefined or isn't an array, return an empty array
-    if (!res.following || res.following.constructor !== Array) res.following = [];
-    loadResults(res.following);
+    if (!res.following || !res.following.au) res.following.au = [];
+    loadResults(res.following.au);
 });
 
 
@@ -42,6 +42,7 @@ function updateQueueProgress(count) {
 
 // Sort the data once all the items in the queue have finished loading
 function sortResults(athletes) {
+
     // Index all the results by their date
     var dateIndex = {};
     $.each(athletes, function(i, athlete) {
@@ -58,6 +59,7 @@ function sortResults(athletes) {
     var days = [];
     $.each(dateIndex, function(date, results) {
         days.push({
+            // Convert the date into unix time for easy sorting
             date: moment(date, 'DD-MM-YYYY').valueOf(),
             results: results
         });
@@ -83,6 +85,7 @@ function sortResults(athletes) {
         })
     });
 
+    data.athletes = athletes;
     data.days = days;
     data.doneLoading = true;
 }
@@ -96,6 +99,7 @@ function convertResultTimeToSeconds(resultTime) {
 
 var data = {
     days: [],
+    athletes: [],
     loadProgress: 0,
     doneLoading: false
 };
@@ -115,10 +119,5 @@ Vue.material.registerTheme({
 // Initialise the app
 var app = new Vue({
     el: '#app',
-    data: data,
-    methods: {
-        toggleLeftSidenav() {
-            this.$refs.leftSidenav.toggle();
-        }
-    }
-})
+    data: data
+});

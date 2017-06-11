@@ -5,14 +5,27 @@
     <meta charset="utf-8">
     <title>Parkrun Plus</title>
     <link rel="stylesheet" href="../node_modules/vue-material/dist/vue-material.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel="stylesheet" href="../node_modules/material-design-icons/iconfont/material-icons.css">
     <style>
-      .card-column {
-        margin: 20px;
-        max-width: 900px;
-      }
-      #loading-spinner {
-        margin-top: 50px;
-      }
+        .card-column {
+            margin: 20px;
+            max-width: 900px;
+        }
+        #loading-spinner {
+            margin-top: 50px;
+        }
+        /* Pull into external file */
+        .example-tabs {
+            margin-top: -48px;
+            @media (max-width: 480px) {
+            margin-top: -1px;
+            background-color: #fff;
+            }
+        }
+        .example-tabs .md-tabs-navigation {
+            background-color: initial !important;
+        }
     </style>
 </head>
 
@@ -22,18 +35,31 @@
             <h1 class="md-title">Parkrun Plus</h1>
         </md-toolbar>
 
-        <md-layout md-align="center" v-if="!doneLoading">
-            <md-spinner id="loading-spinner" v-bind:md-indeterminate="loadProgress == 0" :md-progress="loadProgress" :md-size="150"></md-spinner>
-        </md-layout>
+        <md-tabs md-right class="example-tabs">
 
-        <div class="main-content">
-            <!-- Display a card for each day -->
-            <results-card v-for="day in days" :day="day" :key="day.date"></results-card>
-        </div>
+            <md-tab id="times" md-label="Times">
+                <md-layout md-align="center" v-if="!doneLoading">
+                    <md-spinner id="loading-spinner" v-bind:md-indeterminate="loadProgress == 0" :md-progress="loadProgress" :md-size="150"></md-spinner>
+                </md-layout>
+
+                <div class="main-content">
+                    <!-- Display a card for each day -->
+                    <results-card v-for="day in days" :day="day" :key="day.date"></results-card>
+                </div>
+            </md-tab>
+
+            <md-tab id="athletes" md-label="Athletes">
+                <athletes-card :athletes="athletes"></athletes-card>
+            </md-tab>
+        </md-tabs>
+
+
+
+        
     </div>
 
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../node_modules/moment/moment.js"></script>
+    <script src="../node_modules/moment/min/moment.min.js"></script>
     <script src="../node_modules/vue/dist/vue.min.js"></script>
     <script src="../node_modules/vue-material/dist/vue-material.js"></script>
     <script src="api.js"></script>
