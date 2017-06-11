@@ -3,7 +3,7 @@
 
     "name": "Parkrun Plus",
     "description": "Follow Parkrun runners via their athlete results page.",
-    "version": "0.1",
+    "version": "1.0",
 
     "icons": {
         "16": "icon16.png",
