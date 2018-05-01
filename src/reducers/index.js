@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import athleteReducer from "./athlete"
+import athletes from "./athletes"
 
 export default combineReducers({
-    athleteReducer
+    athletes
 });

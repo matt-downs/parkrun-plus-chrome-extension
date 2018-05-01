@@ -1,5 +1,5 @@
 
-export const testAction = filter => ({
-  type: 'SET_VISIBILITY_FILTER',
-  filter
+export const testAction = athlete => ({
+  type: 'GOT_ATHLETE',
+  athlete
 })
