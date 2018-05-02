@@ -1,9 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import RunTimeline from '../containers/RunTimeline';
+import EventTimeline from '../containers/EventTimeline';
+
 
 const App = () => (
-    <RunTimeline/>
+    <EventTimeline/>
 )
 
 export default App
