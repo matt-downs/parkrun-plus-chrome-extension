@@ -13,6 +13,9 @@ function generateRunTimeline(athletes) {
     let runsByDate = {};
     _.forOwn(athletes, (athlete, athleteId) => {
         _.forEach(athlete.recentRuns, (run) => {
+            // Add the athleteId to the run for future reference
+            run.athleteId = athlete.athleteId;
+
             if (!runsByDate[run.date]) runsByDate[run.date] = [run];
             else runsByDate[run.date].push(run);
         });
