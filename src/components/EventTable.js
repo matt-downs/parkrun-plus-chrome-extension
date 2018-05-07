@@ -25,7 +25,7 @@ const EventTable = ({ event, athletes, classes }) => {
                     <TableRow>
                         <TableCell>Name</TableCell>
                         <TableCell numeric>Time</TableCell>
-                        <TableCell numeric>Location</TableCell>
+                        <TableCell>Location</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -35,7 +35,7 @@ const EventTable = ({ event, athletes, classes }) => {
                         <TableRow >
                             <TableCell>{athletes[run.athleteId].name}</TableCell>
                             <TableCell numeric>{run.time}</TableCell>
-                            <TableCell numeric>{run.event}</TableCell>
+                            <TableCell>{run.event}</TableCell>
                         </TableRow>
                     );
                 })}
