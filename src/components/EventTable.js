@@ -1,13 +1,25 @@
 import React from 'react';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography'
+import { withStyles } from 'material-ui/styles';
+import Typography from 'material-ui/Typography';
 
 
-const EventTable = ({ event, athletes }) => {
+
+const styles = theme => ({
+    eventTable: {
+        marginBottom: theme.spacing.unit * 3
+    },
+    title: {
+        paddingTop: theme.spacing.unit * 3,
+        paddingLeft: theme.spacing.unit * 3,
+    }
+});
+
+const EventTable = ({ event, athletes, classes }) => {
     return (
-        <Paper>
-            <Typography variant="title">{event.date}</Typography>
+        <Paper className={classes.eventTable}>
+            <Typography variant="title" className={classes.title}>{event.date}</Typography>
             <Table>
                 <TableHead>
                     <TableRow>
@@ -33,4 +45,4 @@ const EventTable = ({ event, athletes }) => {
     );
 }
 
-export default EventTable
+export default withStyles(styles)(EventTable)

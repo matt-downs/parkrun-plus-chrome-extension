@@ -1,9 +1,6 @@
 import React from 'react';
 import EventTimeline from '../containers/EventTimeline';
 import Grid from 'material-ui/Grid';
-import CssBaseline from 'material-ui/CssBaseline';
-
-
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
