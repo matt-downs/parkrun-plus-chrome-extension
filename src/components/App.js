@@ -59,8 +59,6 @@ class App extends React.Component {
     render() {
         const { classes, theme } = this.props;
 
-        console.log(theme);
-
         const drawerContent = (
             <Fragment>
                 <div className={classes.toolbar} />

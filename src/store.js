@@ -5,12 +5,22 @@ import reducer from "./reducers"
 
 import { testAction } from './actions'
 
+import { getAthlete } from './getAthlete';
+
 
 const middleware = applyMiddleware(createLogger());
 
 
 const store = createStore(reducer, middleware);
 export default store;
+
+getAthlete('2054291')
+.then(athlete => {
+    console.log(athlete.name);
+})
+.catch(err => {
+    console.log(err);
+});
 
 
 const dummyAthlete_matt = {
