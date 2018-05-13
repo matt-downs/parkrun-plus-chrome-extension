@@ -1,4 +1,3 @@
-
 const developmentMode = process.env.NODE_ENV && process.env.NODE_ENV === 'development';
 
 
@@ -52,11 +51,10 @@ export const getAthletesFollowing = () => {
 export const followAthlete = (athleteId) => {
     return new Promise(async (resolve, reject) => {
         if (developmentMode) {
-        
             let following = await getAthletesFollowing();
             let alreadyFollowing = false;
             for (let athlete of following) {
-                if (athlete == athleteId) {
+                if (athlete === athleteId) {
                     alreadyFollowing = true;
                     break;
                 }

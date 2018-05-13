@@ -1,5 +1,7 @@
+// Core
 import React from 'react';
-import EventTimeline from '../containers/EventTimeline';
+import { BrowserRouter, Route } from 'react-router-dom';
+// Material
 import Grid from 'material-ui/Grid';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -7,6 +9,9 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+// Custom
+import EventTimeline from '../containers/EventTimeline';
+import FollowAthletes from '../containers/Follow';
 import AppDrawer, { drawerWidth } from "./AppDrawer";
 
 
@@ -36,11 +41,6 @@ const styles = theme => ({
 
 
 class App extends React.Component {
-
-    state = {
-        mobileOpen: false,
-    };
-
     toggleAppDrawer = () => {
         this.appDrawer.handleDrawerToggle()
     };
@@ -49,27 +49,30 @@ class App extends React.Component {
         const { classes } = this.props;
 
         return (
-            <div className={classes.root}>
-                <AppBar className={classes.appBar}>
-                    <Toolbar>
-                        <IconButton color="inherit" aria-label="open drawer" onClick={this.toggleAppDrawer} className={classes.navIconHide}>
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography variant="title" color="inherit" noWrap>
-                            Parkrun Plus
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
+            <BrowserRouter>
+                <div className={classes.root}>
+                    <AppBar className={classes.appBar}>
+                        <Toolbar>
+                            <IconButton color="inherit" aria-label="open drawer" onClick={this.toggleAppDrawer} className={classes.navIconHide}>
+                                <MenuIcon />
+                            </IconButton>
+                            <Typography variant="title" color="inherit" noWrap>
+                                Parkrun Plus
+                            </Typography>
+                        </Toolbar>
+                    </AppBar>
 
-                <AppDrawer onRef={ref => (this.appDrawer = ref)}/>
+                    <AppDrawer onRef={ref => (this.appDrawer = ref)}/>
 
-                <main className={classes.content}>
-                    <div className={classes.toolbar} />
-                    <Grid container>
-                        <EventTimeline/>
-                    </Grid>
-                </main>
-            </div>
+                    <main className={classes.content}>
+                        <div className={classes.toolbar} />
+                        <Grid container>
+                            <Route exact path="/" component={EventTimeline}/>
+                            <Route path="/follow" component={FollowAthletes}/>
+                        </Grid>
+                    </main>
+                </div>
+            </BrowserRouter>
         );
     }
 }
