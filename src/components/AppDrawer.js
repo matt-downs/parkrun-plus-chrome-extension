@@ -1,32 +1,31 @@
 import React, { Fragment } from 'react';
-import EventTimeline from '../containers/EventTimeline';
-import Grid from 'material-ui/Grid';
 import Drawer from 'material-ui/Drawer';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import Typography from 'material-ui/Typography';
-import Divider from 'material-ui/Divider';
 import { withStyles } from 'material-ui/styles';
 import DirectionsRun from '@material-ui/icons/DirectionsRun';
 import RssFeed from '@material-ui/icons/RssFeed';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import Hidden from 'material-ui/Hidden';
 
 
 
-const drawerWidth = 240;
+export const drawerWidth = 240;
 
 const styles = theme => ({
     drawerPaper: {
-        width: drawerWidth,
+        width: drawerWidth
     },
-    toolbar: theme.mixins.toolbar,
+    toolbar: theme.mixins.toolbar
 });
 
 
 class AppDrawer extends React.Component {
+
+    componentDidMount() {
+        this.props.onRef(this)
+    }
+    componentWillUnmount() {
+        this.props.onRef(undefined)
+    }
 
     state = {
         mobileOpen: false,
@@ -37,7 +36,7 @@ class AppDrawer extends React.Component {
     };
 
     render() {
-        const { classes, theme } = this.props;
+        const { classes } = this.props;
 
         const drawerContent = (
             <Fragment>
@@ -67,7 +66,9 @@ class AppDrawer extends React.Component {
                         anchor='left'
                         open={this.state.mobileOpen}
                         onClose={this.handleDrawerToggle}
-                        classes={{paper: classes.drawerPaper}}
+                        classes={{
+                            paper: classes.drawerPaper
+                        }}
                         ModalProps={{
                             keepMounted: true, // Better open performance on mobile.
                         }}
