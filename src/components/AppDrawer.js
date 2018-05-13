@@ -7,8 +7,8 @@ import RssFeed from '@material-ui/icons/RssFeed';
 import Hidden from 'material-ui/Hidden';
 
 
-
 export const drawerWidth = 240;
+
 
 const styles = theme => ({
     drawerPaper: {
@@ -85,5 +85,6 @@ class AppDrawer extends React.Component {
         );
     }
 }
+
 
 export default withStyles(styles, { withTheme: true })(AppDrawer)

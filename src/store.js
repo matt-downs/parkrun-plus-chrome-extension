@@ -5,7 +5,7 @@ import reducer from "./reducers"
 
 import { testAction } from './actions'
 
-import { getAthlete } from './getAthlete';
+import { getAthlete, getAthletesFollowing, followAthlete } from './shim';
 
 
 const middleware = applyMiddleware(createLogger());
@@ -17,6 +17,22 @@ export default store;
 getAthlete('2054291')
 .then(athlete => {
     console.log(athlete.name);
+})
+.catch(err => {
+    console.log(err);
+});
+
+getAthletesFollowing()
+.then(athletes => {
+    console.log(athletes);
+})
+.catch(err => {
+    console.log(err);
+});
+
+followAthlete('2054291')
+.then(athletes => {
+    console.log(athletes);
 })
 .catch(err => {
     console.log(err);
