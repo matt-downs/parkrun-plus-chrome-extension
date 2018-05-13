@@ -9,6 +9,8 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import CssBaseline from 'material-ui/CssBaseline';
+
 // Custom
 import EventTimeline from '../containers/EventTimeline';
 import FollowAthletes from '../containers/Follow';
@@ -30,7 +32,6 @@ const styles = theme => ({
     },
     content: {
         flexGrow: 1,
-        backgroundColor: theme.palette.background.default,
         padding: theme.spacing.unit * 3,
         [theme.breakpoints.up('md')]: {
             marginLeft: drawerWidth,
@@ -50,28 +51,33 @@ class App extends React.Component {
 
         return (
             <BrowserRouter>
-                <div className={classes.root}>
-                    <AppBar className={classes.appBar}>
-                        <Toolbar>
-                            <IconButton color="inherit" aria-label="open drawer" onClick={this.toggleAppDrawer} className={classes.navIconHide}>
-                                <MenuIcon />
-                            </IconButton>
-                            <Typography variant="title" color="inherit" noWrap>
-                                Parkrun Plus
-                            </Typography>
-                        </Toolbar>
-                    </AppBar>
+                <React.Fragment>
+                    <CssBaseline />
+                    <div className={classes.root}>
 
-                    <AppDrawer onRef={ref => (this.appDrawer = ref)}/>
+                        <AppBar className={classes.appBar}>
+                            <Toolbar>
+                                <IconButton color="inherit" aria-label="open drawer" onClick={this.toggleAppDrawer} className={classes.navIconHide}>
+                                    <MenuIcon />
+                                </IconButton>
+                                <Typography variant="title" color="inherit" noWrap>
+                                    Parkrun Plus
+                                </Typography>
+                            </Toolbar>
+                        </AppBar>
 
-                    <main className={classes.content}>
-                        <div className={classes.toolbar} />
-                        <Grid container>
-                            <Route exact path="/" component={EventTimeline}/>
-                            <Route path="/follow" component={FollowAthletes}/>
-                        </Grid>
-                    </main>
-                </div>
+                        <AppDrawer onRef={ref => (this.appDrawer = ref)}/>
+
+                        <main className={classes.content}>
+                            <div className={classes.toolbar} />
+                            <Grid container>
+                                <Route exact path="/" component={EventTimeline}/>
+                                <Route path="/athletes" component={FollowAthletes}/>
+                            </Grid>
+                        </main>
+
+                    </div>
+                </React.Fragment>
             </BrowserRouter>
         );
     }

@@ -49,7 +49,7 @@ class AppDrawer extends React.Component {
                         </ListItemIcon>
                         <ListItemText primary="Feed" />
                     </ListItem>
-                    <ListItem button component={Link} to="/follow" onClick={() => this.handleDrawerToggle(false)}>
+                    <ListItem button component={Link} to="/athletes" onClick={() => this.handleDrawerToggle(false)}>
                         <ListItemIcon>
                             <DirectionsRun />
                         </ListItemIcon>
@@ -66,7 +66,7 @@ class AppDrawer extends React.Component {
                         variant="temporary"
                         anchor='left'
                         open={this.state.drawerOpen}
-                        onClose={this.handleDrawerToggle}
+                        onClose={() => this.handleDrawerToggle(false)}
                         classes={{
                             paper: classes.drawerPaper
                         }}
