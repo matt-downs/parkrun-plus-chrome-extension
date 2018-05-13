@@ -13,7 +13,7 @@ import CssBaseline from 'material-ui/CssBaseline';
 
 // Custom
 import EventTimeline from '../containers/EventTimeline';
-import FollowAthletes from '../containers/Follow';
+import AthletesList from '../containers/AthletesList';
 import AppDrawer, { drawerWidth } from "./AppDrawer";
 
 
@@ -72,7 +72,7 @@ class App extends React.Component {
                             <div className={classes.toolbar} />
                             <Grid container>
                                 <Route exact path="/" component={EventTimeline}/>
-                                <Route path="/athletes" component={FollowAthletes}/>
+                                <Route path="/athletes" component={AthletesList}/>
                             </Grid>
                         </main>
 

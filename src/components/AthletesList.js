@@ -21,7 +21,7 @@ const styles = theme => ({
 })
 
 
-class FollowList extends React.Component {
+class AthletesList extends React.Component {
     state = {
         anchorEl: null
     };
@@ -37,7 +37,7 @@ class FollowList extends React.Component {
 
     render() {
         const { anchorEl } = this.state;
-        const { classes, theme } = this.props;
+        const { classes, theme, athletesList } = this.props;
 
         return(
             <Grid item xs={12}>
@@ -46,34 +46,22 @@ class FollowList extends React.Component {
                 </Typography>
 
                 <List>
-                    <ListItem button>
-                        <Avatar>MD</Avatar>
-                        <ListItemText primary="Matt Downs" />
-                        <ListItemSecondaryAction>
-                            <IconButton
-                                aria-label="Delete"
-                                aria-owns={anchorEl ? 'simple-menu' : null}
-                                aria-haspopup="true"
-                                onClick={this.handleClick}
-                            >
-                                <MoreVert />
-                            </IconButton>
-                        </ListItemSecondaryAction>
-                    </ListItem>
-                    <ListItem button>
-                        <Avatar>FG</Avatar>
-                        <ListItemText primary="Frances Greville-Eyres" />
-                        <ListItemSecondaryAction>
-                            <IconButton
-                                aria-label="Delete"
-                                aria-owns={anchorEl ? 'simple-menu' : null}
-                                aria-haspopup="true"
-                                onClick={this.handleClick}
-                            >
-                                <MoreVert />
-                            </IconButton>
-                        </ListItemSecondaryAction>
-                    </ListItem>
+                    {athletesList.map(athlete => (
+                        <ListItem button key={athlete.athleteId}>
+                            <Avatar>{athlete.initials}</Avatar>
+                            <ListItemText primary={athlete.name} />
+                            <ListItemSecondaryAction>
+                                <IconButton
+                                    aria-label="Delete"
+                                    aria-owns={anchorEl ? 'simple-menu' : null}
+                                    aria-haspopup="true"
+                                    onClick={this.handleClick}
+                                >
+                                    <MoreVert />
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        </ListItem>
+                    ))}
                 </List>
 
                 <Menu
@@ -98,4 +86,4 @@ class FollowList extends React.Component {
 }
 
 
-export default withStyles(styles, { withTheme: true })(FollowList)
+export default withStyles(styles, { withTheme: true })(AthletesList)
