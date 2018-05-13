@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom'
 import Drawer from 'material-ui/Drawer';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
@@ -19,20 +20,20 @@ const styles = theme => ({
 
 
 class AppDrawer extends React.Component {
-
     componentDidMount() {
         this.props.onRef(this)
     }
+
     componentWillUnmount() {
         this.props.onRef(undefined)
     }
 
     state = {
-        mobileOpen: false,
+        drawerOpen: false,
     };
 
-    handleDrawerToggle = () => {
-        this.setState({ mobileOpen: !this.state.mobileOpen });
+    handleDrawerToggle = (drawerState = !this.state.drawerOpen) => {
+        this.setState({ drawerOpen: drawerState });
     };
 
     render() {
@@ -42,13 +43,13 @@ class AppDrawer extends React.Component {
             <Fragment>
                 <div className={classes.toolbar} />
                 <List component="nav">
-                    <ListItem button>
+                    <ListItem button component={Link} to="/" onClick={() => this.handleDrawerToggle(false)}>
                         <ListItemIcon>
                             <RssFeed />
                         </ListItemIcon>
                         <ListItemText primary="Feed" />
                     </ListItem>
-                    <ListItem button>
+                    <ListItem button component={Link} to="/follow" onClick={() => this.handleDrawerToggle(false)}>
                         <ListItemIcon>
                             <DirectionsRun />
                         </ListItemIcon>
@@ -64,7 +65,7 @@ class AppDrawer extends React.Component {
                     <Drawer
                         variant="temporary"
                         anchor='left'
-                        open={this.state.mobileOpen}
+                        open={this.state.drawerOpen}
                         onClose={this.handleDrawerToggle}
                         classes={{
                             paper: classes.drawerPaper
