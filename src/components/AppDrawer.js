@@ -88,4 +88,4 @@ class AppDrawer extends React.Component {
 }
 
 
-export default withStyles(styles, { withTheme: true })(AppDrawer)
+export default withStyles(styles)(AppDrawer)

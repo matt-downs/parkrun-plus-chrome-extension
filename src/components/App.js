@@ -10,11 +10,11 @@ import { withStyles } from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import CssBaseline from 'material-ui/CssBaseline';
-
 // Custom
 import EventTimeline from '../containers/EventTimeline';
 import AthletesList from '../containers/AthletesList';
 import AppDrawer, { drawerWidth } from "./AppDrawer";
+import FollowAthlete from '../containers/FollowAthlete';
 
 
 const styles = theme => ({
@@ -72,7 +72,8 @@ class App extends React.Component {
                             <div className={classes.toolbar} />
                             <Grid container>
                                 <Route exact path="/" component={EventTimeline}/>
-                                <Route path="/athletes" component={AthletesList}/>
+                                <Route exact path="/athletes" component={AthletesList}/>
+                                <Route path="/athletes/follow" component={FollowAthlete}/>
                             </Grid>
                         </main>
 
@@ -84,4 +85,4 @@ class App extends React.Component {
 }
 
 
-export default withStyles(styles, { withTheme: true })(App)
+export default withStyles(styles)(App)

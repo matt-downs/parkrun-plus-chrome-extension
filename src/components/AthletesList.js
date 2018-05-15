@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from 'material-ui/Grid';
-import List, { ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
+import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import IconButton from 'material-ui/IconButton';
 import Button from 'material-ui/Button';
@@ -10,6 +10,7 @@ import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import Zoom from 'material-ui/transitions/Zoom';
+import { Link } from 'react-router-dom';
 
 
 const styles = theme => ({
@@ -37,7 +38,7 @@ class AthletesList extends React.Component {
 
     render() {
         const { anchorEl } = this.state;
-        const { classes, theme, athletesList } = this.props;
+        const { classes, athletesList } = this.props;
 
         return(
             <Grid item xs={12}>
@@ -75,15 +76,21 @@ class AthletesList extends React.Component {
                 </Menu>
 
                 <Zoom in={true}>
-                    <Button variant="fab" className={classes.fab} color="primary" aria-label="add">
+                    <Button
+                        variant="fab"
+                        component={Link}
+                        to="/athletes/follow"
+                        className={classes.fab}
+                        color="primary"
+                        aria-label="add"
+                    >
                         <Add />
                     </Button>
-                </Zoom>
-                
+                </Zoom>                
             </Grid>
         )
     }
 }
 
 
-export default withStyles(styles, { withTheme: true })(AthletesList)
+export default withStyles(styles)(AthletesList)

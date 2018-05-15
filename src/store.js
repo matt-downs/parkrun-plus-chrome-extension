@@ -1,8 +1,8 @@
 import { applyMiddleware, createStore } from "redux";
 import { createLogger } from "redux-logger";
 import reducer from "./reducers"
-import { fetchedAthleteData } from './actions'
-import { getAthlete, getAthletesFollowing, followAthlete } from './shim';
+import { fetchedAthleteData, followAthleteAction } from './actions'
+import { getAthlete, getAthletesFollowing } from './shim';
 
 
 const middleware = applyMiddleware(createLogger());
